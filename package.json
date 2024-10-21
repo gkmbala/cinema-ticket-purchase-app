@@ -1,0 +1,15 @@
+{
+  "name": "cinema-ticket-purchase-app",
+  "version": "1.0.0",
+  "description": "A simple Node.js application for purchasing tickets with basic validation and business rules.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test/TicketServiceTest.js"
+  },
+  "engines": {
+    "node": ">=20.18.0"
+  },
+  "author": "Balaji Kaliyaperumal"
+}

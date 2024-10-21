@@ -1,0 +1,91 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Purchase</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Purchase Tickets</h1>
+       <form id="ticketForm">
+            <label for="accountId">Account ID:</label><br>
+            <input type="number" id="accountId" name="accountId" required><br><br>
+
+            <label for="adultTickets">Adult Tickets:</label><br>
+            <input type="number" id="adultTickets" name="adultTickets" min="0" value="0"><br><br>
+
+            <label for="childTickets">Child Tickets:</label><br>
+            <input type="number" id="childTickets" name="childTickets" min="0" value="0"><br><br>
+
+            <label for="infantTickets">Infant Tickets:</label><br>
+            <input type="number" id="infantTickets" name="infantTickets" min="0" value="0"><br><br>
+
+            <button type="submit">Purchase Tickets</button>
+        </form>
+
+        <div class="result" id="result"></div>
+    </div>
+    <script>
+        document.getElementById('ticketForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(this);
+            const data = new URLSearchParams(formData).toString();
+
+            fetch('/purchase', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: data
+            })
+            .then(response => {
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('result').innerHTML = data; // Update result div with response
+            })
+            .catch(error => {
+                document.getElementById('result').innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+            });
+        });
+    </script>
+</body>
+</html>
